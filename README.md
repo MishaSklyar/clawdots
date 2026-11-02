@@ -14,6 +14,8 @@ and a little crab-ish friend named Clawd who lives on your screen.
 
 </div>
 
+<p align="center"><img src="screenshots/desktop.png" alt="clawdots desktop: bar, wallpaper and the Clawd pet" width="900"></p>
+
 ---
 
 ## ✦ Highlights
