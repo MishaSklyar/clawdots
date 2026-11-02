@@ -1,22 +1,87 @@
+<div align="center">
+
+<img src="wallpaper/clawd.png" alt="Clawd" width="720">
+
 # clawdots
 
-Hyprland (Lua config), black and flat, with one orange accent (Clawd, `#da7756`).
+**Black. Flat. One orange accent.**
+A [Hyprland](https://hypr.land) (Lua config) desktop with a [Quickshell](https://quickshell.org) bar,
+and a little crab-ish friend named Clawd who lives on your screen.
 
-- **hypr/**: `hyprland.lua`, `hyprlock.conf` (clock + Clawd), `hypridle.conf` (lock after 5 min, screens off after 6), `hyprpaper.conf`
-- **quickshell/**: bar, launcher with calculator (`SUPER+space`, try `2^10` or `15% of 80`), notification daemon + toasts,
-  volume OSD, now-playing, popups for cpu / mem / vol / net / calendar. The bar's Clawd blinks, hops on workspace switch and runs when the cpu is busy.
-- **pet/**: Clawd walks the bottom of the screen and the tops of windows, jumps up onto windows, falls when they close,
-  hops when you switch workspace, shouts `!` at new windows, and falls asleep (z z z) after 40 s of quiet
-- **motion**: springy window pop-in, sliding workspaces, an orange border gradient that slowly rotates around the focused window, soft orange glow, dimmed unfocused windows
-- **bin/shot**: screenshots. **bin/rec**: screen recording (wf-recorder, NVENC). **bin/wall** `<image>`: set wallpaper (remembered via `wallpaper/current`)
-- **ghostty/**, **kitty/**, **fuzzel/**: matching terminals and dmenu
-- **wallpaper/make.py**: renders the Clawd wallpapers (`clawd`, `-plain`, `-inverted`, `-corner`, `-army`) and `clawd-lock.png`.
-  The picker also lists `~/Pictures/Wallpapers` and `~/Pictures/wallpapers`.
-- **waybar/**: legacy fallback bar (not started)
+![Hyprland](https://img.shields.io/badge/Hyprland-Lua-da7756?style=flat-square&labelColor=000000)
+![Quickshell](https://img.shields.io/badge/Quickshell-QML-da7756?style=flat-square&labelColor=000000)
+![accent](https://img.shields.io/badge/accent-%23da7756-da7756?style=flat-square&labelColor=000000)
 
-Install: `./install.sh` (symlinks into `~/.config`, backs up what was there, lists missing packages).
+</div>
 
-## keys
+---
+
+## ✦ Highlights
+
+| | |
+|---|---|
+| 🖤 **Look** | Pure black, flat, a single orange (`#da7756`). Dimmed unfocused windows, soft orange glow. |
+| 🌀 **Motion** | Springy window pop-in, sliding workspaces, an orange border gradient that slowly rotates around the focused window. |
+| 📊 **Bar** | Quickshell bar with now-playing, workspaces, tray, and popups for cpu / mem / vol / net / calendar. |
+| 🚀 **Launcher** | `SUPER+space` app search with a built-in calculator, try `2^10` or `15% 80`. |
+| 🔔 **Notifications** | Native notification daemon, toasts, volume OSD, do-not-disturb. |
+| 🔒 **Lock & idle** | hyprlock with clock + Clawd. Locks after 5 min, screens off after 6. |
+| 🎬 **Capture** | `bin/shot` screenshots, `bin/rec` screen recording (wf-recorder, NVENC). |
+
+## 🦀 Meet Clawd
+
+Clawd is everywhere:
+
+- **In the bar**: blinks, hops when you switch workspace, runs when the CPU is busy.
+- **On the desktop** (`pet/`): walks along the bottom of the screen and across the tops of windows,
+  jumps up onto windows, falls when they close, hops on workspace switch, shouts `!` at new windows,
+  and falls asleep (`z z z`) after 40 s of quiet. Toggle with `SUPER+SHIFT+P`.
+- **On the lockscreen** and in a bunch of wallpapers.
+
+## 🖼 Wallpapers
+
+`wallpaper/make.py` renders the set: `clawd`, `-plain`, `-inverted`, `-corner`, `-army`, plus `clawd-lock.png`.
+
+<div align="center">
+<img src="wallpaper/clawd-army.png" width="32%">
+<img src="wallpaper/clawd-corner.png" width="32%">
+<img src="wallpaper/clawd-inverted.png" width="32%">
+</div>
+
+Pick one with `SUPER+SHIFT+W` or `bin/wall <image>` (remembered via `wallpaper/current`).
+The picker also lists `~/Pictures/Wallpapers` and `~/Pictures/wallpapers`.
+
+## 📦 What's inside
+
+```
+hypr/         hyprland.lua, hyprlock, hypridle, hyprpaper
+quickshell/   bar, launcher, notifications, OSD, popups
+pet/          clawd-pet.py, the desktop pet
+bin/          shot, rec, wall
+ghostty/ kitty/ fuzzel/   matching terminals and dmenu
+wallpaper/    generated wallpapers + make.py
+waybar/       legacy fallback bar (not started)
+install.sh    symlink installer
+```
+
+## 🚀 Install
+
+```sh
+git clone https://github.com/MishaSklyar/clawdots ~/clawdots
+cd ~/clawdots
+./install.sh
+```
+
+The installer symlinks configs into `~/.config`, backs up anything already there
+(`*.bak-<date>`), and lists missing packages. Safe to re-run.
+
+> **Note:** paths assume the repo lives at `~/clawdots`.
+
+**Needs:** `hyprland` `quickshell` `hyprpaper` `hyprlock` `hypridle` `ghostty` `fuzzel` `grim` `slurp`
+`wl-clipboard` `cliphist` `libnotify` `playerctl` `wireplumber` `python` `python-gobject` `python-cairo`
+`gtk4-layer-shell` `wf-recorder` `ffmpeg` `polkit-gnome` `ttf-jetbrains-mono`
+
+## ⌨ Keys
 
 | keys | action |
 |---|---|
