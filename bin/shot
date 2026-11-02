@@ -1,0 +1,17 @@
+#!/bin/sh
+# shot [region|screen]: screenshot to ~/Pictures/Screenshots, copy to clipboard, notify
+set -eu
+dir="${XDG_PICTURES_DIR:-$HOME/Pictures}/Screenshots"
+mkdir -p "$dir"
+f="$dir/$(date +%Y-%m-%d_%H-%M-%S).png"
+
+case "${1:-region}" in
+	screen) grim "$f" ;;
+	region)
+		geom=$(slurp -b 00000088 -c da7756ff -s 00000000 -w 2) || exit 0   # esc = cancel
+		grim -g "$geom" "$f" ;;
+	*) echo "usage: shot [region|screen]" >&2; exit 2 ;;
+esac
+
+wl-copy --type image/png < "$f"
+notify-send -a screenshot -i "$f" "screenshot" "copied, saved to ${f#"$HOME"/}"

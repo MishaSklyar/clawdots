@@ -1,0 +1,55 @@
+#!/bin/sh
+# rec [region|screen|screen-audio]  start a screen recording, or stop the one running
+# saves to ~/Videos/Screencasts/<date>.mp4, encodes on the GPU (NVENC) when available.
+# the bar shows "rec m:ss" while recording (reads $state); click it to stop.
+set -eu
+state="${XDG_RUNTIME_DIR:-/tmp}/clawd-rec"     # "<pid> <start epoch> <file>"
+dir="${XDG_VIDEOS_DIR:-$HOME/Videos}/Screencasts"
+
+# already recording: stop (SIGINT lets wf-recorder finish the file)
+if [ -f "$state" ]; then
+	read -r pid _start file < "$state"
+	rm -f "$state"
+	if kill -INT "$pid" 2>/dev/null; then
+		while kill -0 "$pid" 2>/dev/null; do sleep 0.1; done
+		wl-copy --type text/uri-list "file://$file"
+		notify-send -a recorder "recording saved" "${file#"$HOME"/} (copied)"
+	fi
+	exit 0
+fi
+
+if ! command -v wf-recorder >/dev/null; then
+	notify-send -u critical -a recorder "wf-recorder is not installed" "sudo pacman -S wf-recorder"
+	exit 1
+fi
+
+mkdir -p "$dir"
+file="$dir/$(date +%Y-%m-%d_%H-%M-%S).mp4"
+set -- "${1:-region}"
+args=""
+case "$1" in
+	region)
+		geom=$(slurp -b 00000088 -c da7756ff -s 00000000 -w 2) || exit 0   # esc = cancel
+		;;
+	screen) geom="" ;;
+	screen-audio) geom=""; args="--audio=$(pactl get-default-sink).monitor" ;;
+	*) echo "usage: rec [region|screen|screen-audio]" >&2; exit 2 ;;
+esac
+
+codec="libx264"
+ffmpeg -hide_banner -encoders 2>/dev/null | grep -q h264_nvenc && codec="h264_nvenc"
+
+# shellcheck disable=SC2086
+if [ -n "$geom" ]; then
+	wf-recorder -g "$geom" -c "$codec" -x yuv420p $args -f "$file" >/dev/null 2>&1 &
+else
+	out=$(hyprctl -j monitors | python3 -c 'import json,sys; print(next(m["name"] for m in json.load(sys.stdin) if m["focused"]))')
+	wf-recorder -o "$out" -c "$codec" -x yuv420p $args -f "$file" >/dev/null 2>&1 &
+fi
+pid=$!
+sleep 0.4
+if ! kill -0 "$pid" 2>/dev/null; then
+	notify-send -u critical -a recorder "recording failed to start" "try: wf-recorder -c libx264 -f /tmp/test.mp4"
+	exit 1
+fi
+echo "$pid $(date +%s) $file" > "$state"

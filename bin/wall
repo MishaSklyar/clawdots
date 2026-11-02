@@ -1,0 +1,17 @@
+#!/bin/sh
+# wall <image>  set the wallpaper on every monitor; remembered across restarts
+# wall          print the current wallpaper
+# Works by pointing wallpaper/current at the image and restarting hyprpaper
+# (hyprpaper 0.8's IPC doesn't respond to `hyprctl hyprpaper`).
+set -eu
+dots="$HOME/clawdots"
+cur="$dots/wallpaper/current"
+
+if [ $# -eq 0 ]; then readlink -f "$cur"; exit; fi
+img=$(realpath -- "$1")
+[ -f "$img" ] || { echo "wall: no such file: $1" >&2; exit 1; }
+
+ln -sfn "$img" "$cur"
+pkill -x hyprpaper || true
+i=0; while pgrep -x hyprpaper >/dev/null && [ $i -lt 40 ]; do sleep 0.05; i=$((i + 1)); done
+setsid -f hyprpaper -c "$dots/hypr/hyprpaper.conf" >/dev/null 2>&1
