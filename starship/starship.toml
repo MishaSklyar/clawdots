@@ -1,0 +1,103 @@
+# clawdots starship: flat, no nerd-font glyphs, one orange accent (#da7756)
+"$schema" = 'https://starship.rs/config-schema.json'
+
+add_newline = true
+command_timeout = 500
+
+format = """
+$username$hostname$directory$git_branch$git_status$git_state\
+$python$nodejs$rust$golang$lua$cmd_duration
+$character"""
+
+right_format = "$status$jobs$battery"
+
+palette = "clawd"
+[palettes.clawd]
+orange = "#da7756"
+dim    = "#6b6b6e"
+grey   = "#a0a0a4"
+red    = "#e5534b"
+green  = "#7ab87a"
+
+[character]
+success_symbol = "[❯](bold orange)"
+error_symbol   = "[❯](bold red)"
+vimcmd_symbol  = "[❮](bold green)"
+
+[username]
+format = "[$user]($style)[@](dim)"
+style_user = "grey"
+style_root = "bold red"
+show_always = false
+
+[hostname]
+ssh_only = true
+format = "[$hostname]($style) "
+style = "grey"
+
+[directory]
+format = "[$path]($style)[$read_only]($read_only_style) "
+style = "bold orange"
+read_only = " ro"
+read_only_style = "red"
+truncation_length = 3
+truncation_symbol = "…/"
+truncate_to_repo = true
+
+[git_branch]
+format = "[$branch]($style) "
+style = "grey"
+
+[git_status]
+format = '([$all_status$ahead_behind]($style) )'
+style = "orange"
+conflicted = "="
+ahead      = "⇡${count}"
+behind     = "⇣${count}"
+diverged   = "⇡${ahead_count}⇣${behind_count}"
+untracked  = "?${count}"
+stashed    = "$${count}"
+modified   = "!${count}"
+staged     = "+${count}"
+renamed    = "»${count}"
+deleted    = "x${count}"
+
+[git_state]
+format = '[\($state( $progress_current/$progress_total)\)]($style) '
+style = "red"
+
+[cmd_duration]
+min_time = 2000
+format = "[took $duration]($style) "
+style = "dim"
+
+[status]
+disabled = false
+format = "[$status]($style) "
+style = "red"
+
+[jobs]
+format = "[+$number]($style) "
+style = "orange"
+
+[battery]
+format = "[$percentage]($style)"
+[[battery.display]]
+threshold = 20
+style = "red"
+
+[python]
+format = '[py $version]($style) '
+style = "dim"
+[nodejs]
+format = '[node $version]($style) '
+style = "dim"
+[rust]
+format = '[rs $version]($style) '
+style = "dim"
+[golang]
+format = '[go $version]($style) '
+style = "dim"
+[lua]
+format = '[lua $version]($style) '
+style = "dim"

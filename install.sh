@@ -19,6 +19,7 @@ link hypr                "$CFG/hypr"
 link ghostty/config      "$CFG/ghostty/config"
 link kitty/kitty.conf    "$CFG/kitty/kitty.conf"
 link fuzzel/fuzzel.ini   "$CFG/fuzzel/fuzzel.ini"
+link starship/starship.toml "$CFG/starship.toml"
 # quickshell runs straight from the repo (qs -p ~/clawdots/quickshell); waybar/ is a legacy fallback bar.
 
 chmod +x "$DOTS/bin/"*

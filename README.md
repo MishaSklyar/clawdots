@@ -60,7 +60,7 @@ hypr/         hyprland.lua, hyprlock, hypridle, hyprpaper
 quickshell/   bar, launcher, notifications, OSD, popups
 pet/          clawd-pet.py, the desktop pet
 bin/          shot, rec, wall
-ghostty/ kitty/ fuzzel/   matching terminals and dmenu
+ghostty/ kitty/ fuzzel/ starship/   matching terminals, dmenu and shell prompt
 wallpaper/    generated wallpapers + make.py
 waybar/       legacy fallback bar (not started)
 install.sh    symlink installer
@@ -81,7 +81,7 @@ The installer symlinks configs into `~/.config`, backs up anything already there
 
 **Needs:** `hyprland` `quickshell` `hyprpaper` `hyprlock` `hypridle` `ghostty` `fuzzel` `grim` `slurp`
 `wl-clipboard` `cliphist` `libnotify` `playerctl` `wireplumber` `python` `python-gobject` `python-cairo`
-`gtk4-layer-shell` `wf-recorder` `ffmpeg` `polkit-gnome` `ttf-jetbrains-mono`
+`gtk4-layer-shell` `wf-recorder` `ffmpeg` `polkit-gnome` `ttf-jetbrains-mono` `starship`
 
 ## ⌨ Keys
 
