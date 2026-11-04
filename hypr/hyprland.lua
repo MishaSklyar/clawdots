@@ -151,25 +151,17 @@ bind(mod .. " + C", hl.dsp.window.center())
 bind(mod .. " + mouse:272", hl.dsp.window.drag(), { mouse = true })
 bind(mod .. " + mouse:273", hl.dsp.window.resize(), { mouse = true })
 
--- switch windows (alt-tab), across workspaces: jumps to the previously focused window,
--- switching workspace if needed. Press again to go back; with SHIFT go to the least recently used one.
-local function alt_tab(oldest)
-	return function()
-		local pick
-		for _, w in ipairs(hl.get_windows()) do
-			if w.mapped and not w.hidden and w.focus_history_id >= 0 then
-				if oldest then
-					if not pick or w.focus_history_id > pick.focus_history_id then pick = w end
-				elseif w.focus_history_id == 1 then
-					pick = w
-				end
-			end
-		end
-		if pick then hl.dispatch(hl.dsp.focus({ window = "address:" .. pick.address })) end
+-- switch windows (alt-tab): quickshell shows the switcher (quickshell/Switcher.qml). Hold ALT and tap
+-- TAB to walk the list (most recently used first, all workspaces), release ALT to jump there.
+local alt_held = false
+bind("ALT + Tab", function() alt_held = true; hl.exec_cmd(qs .. " ipc call switcher next") end)
+bind("ALT + SHIFT + Tab", function() alt_held = true; hl.exec_cmd(qs .. " ipc call switcher prev") end)
+hl.timer(function()
+	if alt_held and not (hl.is_key_down("Alt_L") or hl.is_key_down("Alt_R")) then
+		alt_held = false
+		hl.exec_cmd(qs .. " ipc call switcher commit")
 	end
-end
-bind("ALT + Tab", alt_tab(false))
-bind("ALT + SHIFT + Tab", alt_tab(true))
+end, { timeout = 30, type = "repeat" })
 
 -- tabs: group windows into tabs, then flip through them
 bind(mod .. " + W", hl.dsp.group.toggle())

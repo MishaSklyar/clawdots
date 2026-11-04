@@ -7,6 +7,7 @@ ShellRoot {
     Osd {}
     WallPicker {}
     Corner {}
+    Switcher {}
 
     // qs -p ~/clawdots/quickshell ipc call popup toggle cpu
     IpcHandler {
