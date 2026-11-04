@@ -25,6 +25,7 @@ and a little crab-ish friend named Clawd who lives on your screen.
 | 🖤 **Look** | Pure black, flat, a single orange (`#da7756`). Dimmed unfocused windows, soft orange glow. |
 | 🌀 **Motion** | Springy window pop-in, sliding workspaces, an orange border gradient that slowly rotates around the focused window. |
 | 📊 **Bar** | Quickshell bar with now-playing, workspaces, tray, and popups for cpu / mem / vol / net / calendar. |
+| 🪟 **Alt+Tab** | KDE-style window switcher: hold `ALT`, tap `TAB` to walk every window on every workspace, release to jump. Focus also follows the mouse. |
 | 🚀 **Launcher** | `SUPER+space` app search with a built-in calculator, try `2^10` or `15% 80`. |
 | 🔔 **Notifications** | Native notification daemon, toasts, volume OSD, do-not-disturb. |
 | 🔒 **Lock & idle** | hyprlock with clock + Clawd. Locks after 5 min, screens off after 6. |
@@ -57,7 +58,7 @@ The picker also lists `~/Pictures/Wallpapers` and `~/Pictures/wallpapers`.
 
 ```
 hypr/         hyprland.lua, hyprlock, hypridle, hyprpaper
-quickshell/   bar, launcher, notifications, OSD, popups
+quickshell/   bar, launcher, alt-tab switcher, notifications, OSD, popups
 pet/          clawd-pet.py, the desktop pet
 bin/          shot, rec, wall
 ghostty/ kitty/ fuzzel/ starship/   matching terminals, dmenu and shell prompt
@@ -110,7 +111,7 @@ The installer symlinks configs into `~/.config`, backs up anything already there
 | `SUPER+scroll`, `SUPER+PgUp/PgDn` | previous / next workspace |
 | `SUPER+grave` / `SUPER+SHIFT+grave` | scratchpad / send to scratchpad |
 | `SUPER+W`, `SUPER+[` `]` | group windows as tabs, flip tabs |
-| `ALT+Tab` | cycle windows |
+| hold `ALT`, tap `TAB` (`SHIFT` goes back) | window switcher across all workspaces, most recently used first; release `ALT` to switch, arrows / enter / click choose, esc cancels |
 | `ALT+SHIFT` | switch keyboard layout (us / ru) |
 | `SUPER+ALT+L` | lock (also relaunches hyprlock on the "lockscreen died" screen) |
 | `SUPER+CTRL+ALT+L` | summon the "lockscreen died" screen on purpose (`SUPER+ALT+L` to recover) |
